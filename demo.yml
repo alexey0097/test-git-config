@@ -1,0 +1,40 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+security:
+  enabled: true
+
+spring:
+  application:
+    name: my-application-name
+  cloud:
+    function:
+      definition: consumer;producer
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:29092
+      bindings:
+        producer-out-0:
+          destination: producer-topic
+        consumer-in-0:
+          destination: consumer-topic
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+      current_session_context_class: thread
+      enable_lazy_load_no_trans: true
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
